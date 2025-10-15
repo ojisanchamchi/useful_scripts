@@ -14,7 +14,7 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     env:
-      BUNDLE_GEMFILE: gh-pages/Gemfile
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gh-pages/Gemfile
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
