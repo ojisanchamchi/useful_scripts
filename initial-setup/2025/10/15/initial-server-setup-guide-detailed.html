@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer | Useful Scripts Documentation</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Chào các bạn DevOps và Full-stack Developer!" />
+<meta property="og:description" content="Chào các bạn DevOps và Full-stack Developer!" />
+<link rel="canonical" href="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html" />
+<meta property="og:url" content="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html" />
+<meta property="og:site_name" content="Useful Scripts Documentation" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-10-15T11:30:00+00:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2025-10-15T11:30:00+00:00","datePublished":"2025-10-15T11:30:00+00:00","description":"Chào các bạn DevOps và Full-stack Developer!","headline":"Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer","mainEntityOfPage":{"@type":"WebPage","@id":"https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html"},"url":"https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/useful_scripts/assets/main.css"><link type="application/atom+xml" rel="alternate" href="https://yourusername.github.io/useful_scripts/feed.xml" title="Useful Scripts Documentation" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/useful_scripts/">Useful Scripts Documentation</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer</h1>
+    <p class="post-meta">
+      <time class="dt-published" datetime="2025-10-15T11:30:00+00:00" itemprop="datePublished">Oct 15, 2025
+      </time></p>
+  </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Chào các bạn DevOps và Full-stack Developer!</p>
+
+<p>Việc thiết lập một máy chủ Linux mới từ đầu có thể là một nhiệm vụ tốn thời gian và dễ mắc lỗi. Để đảm bảo máy chủ của bạn hoạt động hiệu quả, bảo mật và tuân thủ các tiêu chuẩn, việc tự động hóa là chìa khóa. Bộ script <code class="language-plaintext highlighter-rouge">initial_server_setup</code> này được thiết kế để giúp bạn thực hiện điều đó, biến quá trình cấu hình ban đầu thành một quy trình nhanh chóng và đáng tin cậy.</p>
+
+<p>Bài viết này sẽ đi sâu vào từng phần của script <code class="language-plaintext highlighter-rouge">initial_setup.sh</code> và các script hỗ trợ, giải thích chi tiết từng bước, cung cấp các đoạn mã quan trọng, lý do cần chúng và cách bạn có thể tùy chỉnh.</p>
+
+<h2 id="cách-thực-hiện">Cách Thực Hiện</h2>
+
+<p>Để bắt đầu, bạn chỉ cần tải xuống và chạy script <code class="language-plaintext highlighter-rouge">initial_setup.sh</code> trên máy chủ Linux (ưu tiên CentOS/RHEL) của mình.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash &lt;<span class="o">(</span>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/initial_setup.sh<span class="o">)</span>
+</code></pre></div></div>
+
+<p><strong>Lưu ý quan trọng:</strong> Luôn đọc và hiểu nội dung của bất kỳ script nào trước khi chạy nó trên môi trường production. Script này sẽ thực hiện các thay đổi sâu rộng trên hệ thống của bạn.</p>
+
+<h2 id="phân-tích-chi-tiết-initial_setupsh">Phân Tích Chi Tiết <code class="language-plaintext highlighter-rouge">initial_setup.sh</code></h2>
+
+<p>Script <code class="language-plaintext highlighter-rouge">initial_setup.sh</code> là một tập hợp các lệnh được thực thi tuần tự để cấu hình máy chủ. Dưới đây là phân tích từng phần:</p>
+
+<h3 id="1-cài-đặt-các-chương-trình-hữu-ích">1. Cài đặt các Chương trình Hữu ích</h3>
+
+<p>Đầu tiên, script sẽ cài đặt một loạt các gói phần mềm cần thiết cho việc quản lý, giám sát và tối ưu hóa máy chủ.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum <span class="nt">-y</span> <span class="nb">install</span> <span class="nt">--enablerepo</span><span class="o">=</span>epel wget byobu chrony net-tools certbot ncdu iotop htop bind-utils traceroute mc bash-completion bash-completion-extras yum-utils nano tmux deltarpm jpegoptim optipng libwebp-tools ImageMagick php-pecl-imagick mysqltuner smem lsof
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">wget</code>, <code class="language-plaintext highlighter-rouge">curl</code>: Công cụ tải file từ internet.</li>
+  <li><code class="language-plaintext highlighter-rouge">byobu</code>, <code class="language-plaintext highlighter-rouge">tmux</code>: Công cụ quản lý phiên terminal, cho phép bạn duy trì các phiên làm việc ngay cả khi mất kết nối SSH.</li>
+  <li><code class="language-plaintext highlighter-rouge">chrony</code>: Đồng bộ hóa thời gian hệ thống chính xác hơn <code class="language-plaintext highlighter-rouge">ntpd</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">net-tools</code>, <code class="language-plaintext highlighter-rouge">bind-utils</code>, <code class="language-plaintext highlighter-rouge">traceroute</code>: Các công cụ mạng cơ bản để chẩn đoán và kiểm tra kết nối.</li>
+  <li><code class="language-plaintext highlighter-rouge">certbot</code>: Công cụ tự động hóa việc cấp phát và gia hạn chứng chỉ SSL/TLS từ Let’s Encrypt.</li>
+  <li><code class="language-plaintext highlighter-rouge">ncdu</code>, <code class="language-plaintext highlighter-rouge">iotop</code>, <code class="language-plaintext highlighter-rouge">htop</code>, <code class="language-plaintext highlighter-rouge">smem</code>, <code class="language-plaintext highlighter-rouge">lsof</code>: Các công cụ giám sát hệ thống mạnh mẽ để theo dõi dung lượng đĩa, I/O, tiến trình, bộ nhớ và các file đang mở.</li>
+  <li><code class="language-plaintext highlighter-rouge">mc</code>: Midnight Commander, một trình quản lý file dựa trên terminal.</li>
+  <li><code class="language-plaintext highlighter-rouge">bash-completion</code>: Tự động hoàn thành lệnh trong bash.</li>
+  <li><code class="language-plaintext highlighter-rouge">nano</code>: Trình soạn thảo văn bản đơn giản.</li>
+  <li><code class="language-plaintext highlighter-rouge">deltarpm</code>: Tăng tốc cập nhật <code class="language-plaintext highlighter-rouge">yum</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">jpegoptim</code>, <code class="language-plaintext highlighter-rouge">optipng</code>, <code class="language-plaintext highlighter-rouge">libwebp-tools</code>, <code class="language-plaintext highlighter-rouge">ImageMagick</code>: Các công cụ tối ưu hóa hình ảnh, rất quan trọng cho các ứng dụng web.</li>
+  <li><code class="language-plaintext highlighter-rouge">php-pecl-imagick</code>: Extension PHP cho ImageMagick.</li>
+  <li><code class="language-plaintext highlighter-rouge">mysqltuner</code>: Script phân tích cấu hình MySQL và đưa ra khuyến nghị tối ưu hóa.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Các công cụ này là xương sống cho mọi hoạt động quản trị và phát triển trên máy chủ, từ gỡ lỗi đến tối ưu hóa hiệu suất.</p>
+
+<h3 id="2-cấu-hình-môi-trường-bash-và-liquidprompt">2. Cấu hình Môi trường Bash và Liquidprompt</h3>
+
+<p>Script cấu hình file <code class="language-plaintext highlighter-rouge">.bashrc</code> cho người dùng <code class="language-plaintext highlighter-rouge">root</code> và <code class="language-plaintext highlighter-rouge">bitrix</code> (nếu có), thêm các alias hữu ích và tích hợp <code class="language-plaintext highlighter-rouge">liquidprompt</code> để có một terminal prompt thông minh.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="sh">\</span><span class="no">EOT</span><span class="sh"> &gt;&gt; ~/.bashrc
+alias mc='mc -x'
+alias door='wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/bitrix/test.php'
+alias lst='ls -alt --time-style=long-iso'
+alias ncdu='ncdu --color off'
+[[ </span><span class="nv">$-</span><span class="sh"> = *i* ]] &amp;&amp; source /opt/liquidprompt/liquidprompt
+export VISUAL=nano
+</span><span class="no">EOT
+
+</span><span class="c"># ... (tương tự cho người dùng bitrix) ...</span>
+
+wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/liquidprompt <span class="nt">-N</span> <span class="nt">-O</span> /opt/liquidprompt/liquidprompt
+wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/liquidpromptrc <span class="nt">-N</span> <span class="nt">-O</span> ~/.config/liquidpromptrc
+<span class="nb">source</span> /opt/liquidprompt/liquidprompt
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><strong>Aliases</strong>: Các lệnh tắt như <code class="language-plaintext highlighter-rouge">mc -x</code> (Midnight Commander với hỗ trợ chuột), <code class="language-plaintext highlighter-rouge">lst</code> (liệt kê file chi tiết theo thời gian), <code class="language-plaintext highlighter-rouge">ncdu --color off</code> (ncdu không màu).</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">liquidprompt</code></strong>: Một prompt Bash/Zsh thông minh, hiển thị thông tin hữu ích như trạng thái Git, tải hệ thống, thời gian chạy lệnh, v.v. Nó giúp bạn có cái nhìn tổng quan về môi trường làm việc ngay trên dòng lệnh.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">export VISUAL=nano</code></strong>: Đặt <code class="language-plaintext highlighter-rouge">nano</code> làm trình soạn thảo mặc định.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">~/.nanorc</code></strong>: Cấu hình syntax highlighting cho <code class="language-plaintext highlighter-rouge">nano</code>.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Cải thiện đáng kể trải nghiệm làm việc trên terminal, giúp bạn làm việc nhanh hơn và hiệu quả hơn.</p>
+
+<h3 id="3-bảo-mật-ssh-key">3. Bảo mật SSH Key</h3>
+
+<p>Script tự động tạo cặp khóa SSH (ED25519) cho người dùng <code class="language-plaintext highlighter-rouge">root</code> và <code class="language-plaintext highlighter-rouge">bitrix</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen <span class="nt">-t</span> ed25519 <span class="nt">-q</span> <span class="nt">-f</span> <span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.ssh/id_ed25519"</span> <span class="nt">-N</span> <span class="s2">""</span>
+<span class="c"># ... (tương tự cho người dùng bitrix) ...</span>
+<span class="nb">chown </span>root. /home/bitrix/.ssh/authorized_keys
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">ssh-keygen -t ed25519</code>: Tạo cặp khóa SSH sử dụng thuật toán ED25519, được coi là an toàn và hiệu quả hơn RSA.</li>
+  <li><code class="language-plaintext highlighter-rouge">-q</code>: Chế độ yên lặng.</li>
+  <li><code class="language-plaintext highlighter-rouge">-f "$HOME/.ssh/id_ed25519"</code>: Chỉ định đường dẫn và tên file cho khóa riêng tư.</li>
+  <li><code class="language-plaintext highlighter-rouge">-N ""</code>: Không đặt passphrase cho khóa (cần cẩn trọng khi sử dụng trong môi trường production).</li>
+  <li><code class="language-plaintext highlighter-rouge">chown root. /home/bitrix/.ssh/authorized_keys</code>: Đảm bảo quyền sở hữu đúng cho file <code class="language-plaintext highlighter-rouge">authorized_keys</code> của người dùng <code class="language-plaintext highlighter-rouge">bitrix</code> để tăng cường bảo mật.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> SSH key là phương pháp xác thực an toàn hơn nhiều so với mật khẩu, đặc biệt quan trọng cho việc truy cập máy chủ từ xa.</p>
+
+<h3 id="4-cấu-hình-certbot-lets-encrypt">4. Cấu hình Certbot (Let’s Encrypt)</h3>
+
+<p>Phần này thiết lập Certbot để tự động gia hạn chứng chỉ SSL/TLS, đảm bảo website của bạn luôn có HTTPS hợp lệ.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/letsencrypt/renewal-hooks/deploy/
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'#!/bin/sh\nservice nginx reload'</span> <span class="o">&gt;</span> /etc/letsencrypt/renewal-hooks/deploy/nginx.sh
+<span class="nb">chmod</span> +x /etc/letsencrypt/renewal-hooks/deploy/nginx.sh
+
+<span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOT</span><span class="sh"> &gt; /etc/sysconfig/certbot
+# ...
+DEPLOY_HOOK="--deploy-hook 'systemctl reload nginx'"
+CERTBOT_ARGS="--allow-subset-of-names"
+</span><span class="no">EOT
+
+</span>systemctl <span class="nb">enable </span>certbot-renew.timer <span class="o">&amp;&amp;</span> systemctl start certbot-renew.timer
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">nginx.sh</code> deploy hook</strong>: Script này được Certbot chạy sau khi gia hạn chứng chỉ thành công. Nó sẽ reload Nginx để áp dụng chứng chỉ mới.</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">/etc/sysconfig/certbot</code></strong>: File cấu hình cho Certbot.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">DEPLOY_HOOK</code>: Chỉ định lệnh sẽ chạy sau khi gia hạn. Ở đây là <code class="language-plaintext highlighter-rouge">systemctl reload nginx</code>.</li>
+      <li><code class="language-plaintext highlighter-rouge">CERTBOT_ARGS="--allow-subset-of-names"</code>: Cho phép Certbot gia hạn chứng chỉ ngay cả khi một số tên miền trong chứng chỉ không thể xác thực được (hữu ích trong một số trường hợp đặc biệt).</li>
+    </ul>
+  </li>
+  <li><strong><code class="language-plaintext highlighter-rouge">certbot-renew.timer</code></strong>: Kích hoạt và khởi động timer của systemd để tự động chạy Certbot định kỳ (thường là hai lần một ngày) để kiểm tra và gia hạn chứng chỉ.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> HTTPS là tiêu chuẩn bắt buộc cho các website hiện đại, đảm bảo bảo mật dữ liệu truyền tải và cải thiện SEO. Tự động hóa gia hạn giúp tránh tình trạng chứng chỉ hết hạn gây gián đoạn dịch vụ.</p>
+
+<h3 id="5-tối-ưu-hóa-systemd-services">5. Tối ưu hóa Systemd Services</h3>
+
+<p>Script tăng giới hạn tài nguyên và cấu hình tự động khởi động lại cho các dịch vụ quan trọng như Nginx, HTTPD, Memcached.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir</span> <span class="nt">-p</span> /etc/systemd/system/nginx.service.d <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'[Service]\nRestart=on-failure\nRestartSec=5\nLimitNPROC=65535\nLimitNOFILE=1000000'</span> <span class="o">&gt;&gt;</span> /etc/systemd/system/nginx.service.d/override.conf
+<span class="c"># ... (tương tự cho httpd và memcached) ...</span>
+systemctl daemon-reload
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">override.conf</code></strong>: Các file này được sử dụng để ghi đè (override) các cấu hình mặc định của dịch vụ systemd mà không cần chỉnh sửa file <code class="language-plaintext highlighter-rouge">.service</code> gốc.</li>
+  <li><code class="language-plaintext highlighter-rouge">Restart=on-failure</code>: Dịch vụ sẽ tự động khởi động lại nếu nó thoát với mã lỗi.</li>
+  <li><code class="language-plaintext highlighter-rouge">RestartSec=5</code>: Chờ 5 giây trước khi thử khởi động lại.</li>
+  <li><code class="language-plaintext highlighter-rouge">LimitNPROC=65535</code>: Tăng giới hạn số lượng tiến trình mà dịch vụ có thể tạo.</li>
+  <li><code class="language-plaintext highlighter-rouge">LimitNOFILE=1000000</code>: Tăng giới hạn số lượng file mà dịch vụ có thể mở.</li>
+  <li><code class="language-plaintext highlighter-rouge">systemctl daemon-reload</code>: Tải lại cấu hình systemd để áp dụng các thay đổi.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Đảm bảo các dịch vụ quan trọng luôn hoạt động ổn định, tự động phục hồi sau sự cố và có đủ tài nguyên để xử lý tải cao.</p>
+
+<h3 id="6-cấu-hình-nginx">6. Cấu hình Nginx</h3>
+
+<p>Các tinh chỉnh cơ bản cho Nginx và tải xuống các file cấu hình Nginx bổ sung.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s1">'gzip_vary on;'</span> <span class="o">&gt;&gt;</span> /etc/nginx/bx/settings/z_bx_custom.conf
+systemctl reload nginx
+
+<span class="c"># Tải xuống các file cấu hình Nginx bổ sung</span>
+wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/nginx/ssl.common.conf <span class="nt">-N</span> <span class="nt">-P</span> /etc/nginx/bx/conf/
+wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/nginx/block_access.conf <span class="nt">-N</span> <span class="nt">-P</span> /etc/nginx/
+<span class="c"># ... và nhiều file khác ...</span>
+
+nginx <span class="nt">-t</span> <span class="o">&amp;&amp;</span> systemctl reload nginx
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">gzip_vary on;</code>: Bật <code class="language-plaintext highlighter-rouge">Vary: Accept-Encoding</code> header cho gzip, giúp các proxy cache phân biệt giữa các phiên bản nén và không nén của tài nguyên.</li>
+  <li>Các file <code class="language-plaintext highlighter-rouge">.conf</code> được tải xuống từ thư mục <code class="language-plaintext highlighter-rouge">nginx/</code> bao gồm:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">ssl.common.conf</code>: Cấu hình SSL/TLS chung.</li>
+      <li><code class="language-plaintext highlighter-rouge">block_access.conf</code>: Các quy tắc chặn truy cập.</li>
+      <li><code class="language-plaintext highlighter-rouge">qrator.conf</code>, <code class="language-plaintext highlighter-rouge">acme_well_known.conf</code>, <code class="language-plaintext highlighter-rouge">locations.conf</code>, <code class="language-plaintext highlighter-rouge">seo.conf</code>: Các cấu hình cụ thể cho Bitrix, Let’s Encrypt challenge, định tuyến URL và SEO.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">nginx -t</code>: Kiểm tra cú pháp cấu hình Nginx.</li>
+  <li><code class="language-plaintext highlighter-rouge">systemctl reload nginx</code>: Tải lại cấu hình Nginx mà không làm gián đoạn dịch vụ.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Tối ưu hóa Nginx là rất quan trọng để đạt được hiệu suất web cao, bảo mật và khả năng xử lý lưu lượng truy cập lớn.</p>
+
+<h3 id="7-cấu-hình-php">7. Cấu hình PHP</h3>
+
+<p>Script áp dụng các tinh chỉnh cho PHP thông qua file <code class="language-plaintext highlighter-rouge">z_bx_custom.ini</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cat</span> <span class="o">&lt;&lt;</span><span class="no">EOT</span><span class="sh"> &gt;&gt; /etc/php.d/z_bx_custom.ini
+mail.add_x_header = Off
+pcre.recursion_limit = 100000
+cgi.fix_pathinfo = 0
+max_input_vars = 100000
+</span><span class="no">EOT
+</span><span class="nb">mv</span> <span class="nt">-f</span> /etc/php.d/20-curl.ini.disabled /etc/php.d/20-curl.ini
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">mail.add_x_header = Off</code>: Tắt việc thêm header <code class="language-plaintext highlighter-rouge">X-PHP-Originating-Script</code> vào email, có thể tăng cường bảo mật nhỏ.</li>
+  <li><code class="language-plaintext highlighter-rouge">pcre.recursion_limit = 100000</code>: Tăng giới hạn đệ quy cho PCRE (Perl Compatible Regular Expressions), hữu ích cho các ứng dụng PHP sử dụng nhiều regex phức tạp.</li>
+  <li><code class="language-plaintext highlighter-rouge">cgi.fix_pathinfo = 0</code>: Một cài đặt bảo mật quan trọng. Khi <code class="language-plaintext highlighter-rouge">cgi.fix_pathinfo</code> được bật, PHP sẽ cố gắng “sửa” đường dẫn file nếu nó không tìm thấy file chính xác, điều này có thể dẫn đến lỗ hổng bảo mật (ví dụ: thực thi mã PHP trong các file không phải PHP).</li>
+  <li><code class="language-plaintext highlighter-rouge">max_input_vars = 100000</code>: Tăng số lượng biến đầu vào tối đa mà PHP có thể xử lý, hữu ích cho các form lớn hoặc các ứng dụng phức tạp.</li>
+  <li><code class="language-plaintext highlighter-rouge">mv -f /etc/php.d/20-curl.ini.disabled /etc/php.d/20-curl.ini</code>: Kích hoạt extension <code class="language-plaintext highlighter-rouge">curl</code> cho PHP.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Tối ưu hóa PHP giúp cải thiện hiệu suất ứng dụng web và khắc phục các vấn đề liên quan đến giới hạn tài nguyên hoặc bảo mật.</p>
+
+<h3 id="8-giới-hạn-hệ-thống-system-limits">8. Giới hạn Hệ thống (System Limits)</h3>
+
+<p>Script cấu hình giới hạn tài nguyên cho người dùng và tiến trình thông qua <code class="language-plaintext highlighter-rouge">limits.d</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nt">-e</span> <span class="s1">'root soft nproc unlimited\n* soft nproc 65535\n* hard nproc 65535\n* soft nofile 1000000\n* hard nofile 1000000'</span> <span class="o">&gt;</span> /etc/security/limits.d/20-nproc.conf  <span class="o">&amp;&amp;</span> sysctl <span class="nt">--system</span>
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">/etc/security/limits.d/20-nproc.conf</code></strong>: File cấu hình giới hạn tài nguyên cho người dùng.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">root soft nproc unlimited</code>: Người dùng <code class="language-plaintext highlighter-rouge">root</code> có thể tạo số lượng tiến trình không giới hạn (soft limit).</li>
+      <li><code class="language-plaintext highlighter-rouge">* soft nproc 65535</code>: Tất cả người dùng khác có thể tạo tối đa 65535 tiến trình (soft limit).</li>
+      <li><code class="language-plaintext highlighter-rouge">* hard nproc 65535</code>: Giới hạn cứng cho số lượng tiến trình.</li>
+      <li><code class="language-plaintext highlighter-rouge">* soft nofile 1000000</code>: Giới hạn mềm cho số lượng file mở.</li>
+      <li><code class="language-plaintext highlighter-rouge">* hard nofile 1000000</code>: Giới hạn cứng cho số lượng file mở.</li>
+    </ul>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">sysctl --system</code>: Áp dụng các thay đổi <code class="language-plaintext highlighter-rouge">sysctl</code> ngay lập tức.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Các ứng dụng web và cơ sở dữ liệu thường cần mở rất nhiều file và tạo nhiều tiến trình. Tăng các giới hạn này giúp ngăn chặn lỗi “Too many open files” hoặc “Cannot fork” dưới tải cao.</p>
+
+<h3 id="9-tối-ưu-hóa-kernel-với-sysctlsh">9. Tối ưu hóa Kernel với <code class="language-plaintext highlighter-rouge">sysctl.sh</code></h3>
+
+<p>Script <code class="language-plaintext highlighter-rouge">sysctl.sh</code> được gọi để áp dụng các tinh chỉnh kernel quan trọng, cải thiện hiệu suất mạng và hệ thống.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/sysctl.sh | bash
+</code></pre></div></div>
+
+<p><strong>Giải thích chi tiết về <code class="language-plaintext highlighter-rouge">sysctl.sh</code>:</strong>
+Script này điều chỉnh các thông số kernel thông qua <code class="language-plaintext highlighter-rouge">sysctl</code> để tối ưu hóa hiệu suất mạng (TCP/IP stack), quản lý bộ nhớ và các giới hạn khác.</p>
+
+<p><strong>Các thông số quan trọng:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">fs.nr_open</code>, <code class="language-plaintext highlighter-rouge">fs.file-max</code>: Tăng giới hạn số lượng file mà hệ thống có thể mở.</li>
+  <li><code class="language-plaintext highlighter-rouge">kernel.msgmni</code>, <code class="language-plaintext highlighter-rouge">kernel.sem</code>, <code class="language-plaintext highlighter-rouge">kernel.shmmax</code>, <code class="language-plaintext highlighter-rouge">kernel.shmall</code>: Các thông số liên quan đến System V IPC (Inter-Process Communication), quan trọng cho một số ứng dụng.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.core.wmem_max</code>, <code class="language-plaintext highlighter-rouge">net.core.rmem_max</code>: Tăng kích thước buffer gửi/nhận tối đa cho socket.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.ipv4.tcp_rmem</code>, <code class="language-plaintext highlighter-rouge">net.ipv4.tcp_wmem</code>: Cấu hình kích thước buffer TCP.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.core.netdev_max_backlog</code>, <code class="language-plaintext highlighter-rouge">net.core.somaxconn</code>: Tăng hàng đợi cho các kết nối mạng đến.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.ipv4.tcp_fin_timeout</code>, <code class="language-plaintext highlighter-rouge">net.ipv4.tcp_keepalive_*</code>: Tinh chỉnh các thông số TCP keepalive và timeout để quản lý kết nối hiệu quả hơn.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.ipv4.tcp_max_syn_backlog</code>: Tăng hàng đợi cho các yêu cầu kết nối TCP SYN.</li>
+  <li><code class="language-plaintext highlighter-rouge">vm.swappiness</code>: Giảm giá trị này (ví dụ: 10) để kernel ít sử dụng swap hơn, ưu tiên giữ dữ liệu trong RAM.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.ipv4.ip_local_port_range</code>: Mở rộng dải cổng cục bộ có sẵn.</li>
+  <li><code class="language-plaintext highlighter-rouge">net.netfilter.nf_conntrack_max</code>: Tăng số lượng kết nối được theo dõi bởi Netfilter (conntrack), quan trọng cho các máy chủ có nhiều kết nối đồng thời.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Tối ưu hóa kernel là một bước quan trọng để máy chủ có thể xử lý lượng lớn kết nối mạng, quản lý tài nguyên hiệu quả và duy trì hiệu suất cao dưới tải nặng.</p>
+
+<h3 id="10-cấu-hình-mydumpermyloader-với-mydumper_cnf_setupsh">10. Cấu hình Mydumper/Myloader với <code class="language-plaintext highlighter-rouge">mydumper_cnf_setup.sh</code></h3>
+
+<p>Script này tự động thêm cấu hình cho <code class="language-plaintext highlighter-rouge">mydumper</code> và <code class="language-plaintext highlighter-rouge">myloader</code> vào file <code class="language-plaintext highlighter-rouge">.my.cnf</code> của người dùng <code class="language-plaintext highlighter-rouge">root</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/mydumper_cnf_setup.sh | bash
+</code></pre></div></div>
+
+<p><strong>Giải thích chi tiết về <code class="language-plaintext highlighter-rouge">mydumper_cnf_setup.sh</code>:</strong>
+Script này đọc thông tin <code class="language-plaintext highlighter-rouge">user</code>, <code class="language-plaintext highlighter-rouge">password</code>, <code class="language-plaintext highlighter-rouge">socket</code> từ phần <code class="language-plaintext highlighter-rouge">[client]</code> trong <code class="language-plaintext highlighter-rouge">/root/.my.cnf</code> và sau đó thêm các phần <code class="language-plaintext highlighter-rouge">[mydumper]</code> và <code class="language-plaintext highlighter-rouge">[myloader]</code> vào file đó với cùng thông tin xác thực.</p>
+
+<p><strong>Đoạn mã quan trọng:</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Trong mydumper_cnf_setup.sh</span>
+<span class="nv">sectionContent</span><span class="o">=</span><span class="si">$(</span><span class="nb">sed</span> <span class="nt">-n</span> <span class="s1">'/^\['</span>client<span class="se">\]</span>/,/^<span class="se">\[</span><span class="s1">'/p'</span> <span class="nv">$pathToIniFile</span> | <span class="nb">sed</span> <span class="nt">-e</span> <span class="s1">'/^\['</span>/d<span class="s1">' | sed -e '</span>/^<span class="nv">$/</span>d<span class="s1">');
+username=$(getValueFromINI "$sectionContent" "user");
+password=$(getValueFromINI "$sectionContent" "password");
+socket=$(getValueFromINI "$sectionContent" "socket");
+
+echo -e "\n[mydumper]\nuser=${username}\npassword=${password}\nsocket=${socket}\n\n[myloader]\nuser=${username}\npassword=${password}\nsocket=${socket}\n" &gt;&gt; $pathToIniFile
+</span></code></pre></div></div>
+
+<p><strong>Tại sao cần:</strong> <code class="language-plaintext highlighter-rouge">mydumper</code> và <code class="language-plaintext highlighter-rouge">myloader</code> là các công cụ sao lưu/phục hồi MySQL song song, nhanh hơn <code class="language-plaintext highlighter-rouge">mysqldump</code> truyền thống. Việc cấu hình sẵn thông tin xác thực giúp việc sử dụng chúng trở nên thuận tiện và an toàn hơn.</p>
+
+<h3 id="11-tối-ưu-hóa-mysql-với-mysql_setupsh">11. Tối ưu hóa MySQL với <code class="language-plaintext highlighter-rouge">mysql_setup.sh</code></h3>
+
+<p>Script này áp dụng một loạt các tinh chỉnh cho MySQL để cải thiện hiệu suất và độ ổn định.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/mysql_setup.sh | bash
+</code></pre></div></div>
+
+<p><strong>Giải thích chi tiết về <code class="language-plaintext highlighter-rouge">mysql_setup.sh</code>:</strong>
+Script này tạo file <code class="language-plaintext highlighter-rouge">/etc/mysql/conf.d/z_bx_custom.cnf</code> và điền vào đó các cấu hình MySQL được khuyến nghị.</p>
+
+<p><strong>Các thông số quan trọng:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">max_connections</code>: Số lượng kết nối tối đa mà MySQL server chấp nhận.</li>
+  <li><code class="language-plaintext highlighter-rouge">long_query_time</code>, <code class="language-plaintext highlighter-rouge">log-queries-not-using-indexes</code>: Cấu hình log slow query, giúp bạn xác định các truy vấn cần tối ưu hóa.</li>
+  <li><code class="language-plaintext highlighter-rouge">innodb_buffer_pool_size</code>: Kích thước bộ nhớ đệm cho InnoDB, đây là thông số quan trọng nhất ảnh hưởng đến hiệu suất MySQL. Giá trị này nên được đặt dựa trên tổng RAM của máy chủ.</li>
+  <li><code class="language-plaintext highlighter-rouge">innodb_buffer_pool_instances</code>: Chia buffer pool thành nhiều instance để giảm contention.</li>
+  <li><code class="language-plaintext highlighter-rouge">table_open_cache</code>: Số lượng bảng tối đa mà MySQL có thể giữ trong bộ nhớ đệm.</li>
+  <li><code class="language-plaintext highlighter-rouge">innodb_flush_log_at_trx_commit</code>: Kiểm soát độ bền của giao dịch. Giá trị <code class="language-plaintext highlighter-rouge">0</code> hoặc <code class="language-plaintext highlighter-rouge">2</code> có thể cải thiện hiệu suất nhưng giảm độ bền trong trường hợp mất điện.</li>
+  <li><code class="language-plaintext highlighter-rouge">skip-name-resolve</code>: Tắt phân giải DNS cho các kết nối client, tăng tốc độ kết nối.</li>
+  <li><code class="language-plaintext highlighter-rouge">skip-networking</code>: Chỉ cho phép kết nối cục bộ (qua socket), tăng cường bảo mật nếu MySQL không cần truy cập từ xa.</li>
+  <li><code class="language-plaintext highlighter-rouge">default_password_lifetime=0</code>: Vô hiệu hóa chính sách hết hạn mật khẩu mặc định.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> MySQL là trái tim của nhiều ứng dụng web. Việc tối ưu hóa cấu hình MySQL là cực kỳ quan trọng để đảm bảo ứng dụng của bạn hoạt động nhanh chóng và ổn định, đặc biệt dưới tải cao.</p>
+
+<h3 id="12-đồng-bộ-thời-gian-với-chrony">12. Đồng bộ thời gian với Chrony</h3>
+
+<p>Script chuyển từ <code class="language-plaintext highlighter-rouge">ntpd</code> sang <code class="language-plaintext highlighter-rouge">chronyd</code> để đồng bộ thời gian.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop ntpd
+systemctl disable ntpd
+systemctl <span class="nb">enable </span>chronyd
+systemctl restart chronyd
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong> <code class="language-plaintext highlighter-rouge">chronyd</code> thường được ưu tiên hơn <code class="language-plaintext highlighter-rouge">ntpd</code> trên các hệ thống Linux hiện đại vì nó có khả năng đồng bộ thời gian nhanh hơn, chính xác hơn và hoạt động tốt hơn trong các môi trường ảo hóa hoặc khi máy chủ thường xuyên bị tạm dừng.</p>
+
+<p><strong>Tại sao cần:</strong> Đồng bộ thời gian chính xác là rất quan trọng cho các hoạt động log, chứng chỉ SSL, xác thực và nhiều tác vụ hệ thống khác.</p>
+
+<h3 id="13-vô-hiệu-hóa-các-dịch-vụ-không-cần-thiết">13. Vô hiệu hóa các Dịch vụ không cần thiết</h3>
+
+<p>Script dừng và vô hiệu hóa một số dịch vụ có thể không cần thiết trong môi trường cụ thể này.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl stop stunnel.service
+systemctl disable stunnel
+systemctl stop httpd-scale.service
+systemctl disable httpd-scale.service
+find /etc/cron.d/bx_httpd-scale <span class="nt">-type</span> f <span class="nt">-print0</span> | xargs <span class="nt">-0</span> <span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/* * * * */#* * * * */g'</span>
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">stunnel</code>: Một proxy SSL/TLS. Có thể không cần thiết nếu bạn đã sử dụng Nginx để xử lý SSL.</li>
+  <li><code class="language-plaintext highlighter-rouge">httpd-scale</code>: Một dịch vụ liên quan đến việc mở rộng Apache HTTPD. Có thể không cần thiết nếu bạn đang sử dụng Nginx làm reverse proxy hoặc không sử dụng Apache.</li>
+  <li><code class="language-plaintext highlighter-rouge">sed -i 's/* * * * */#* * * * */g'</code>: Comment out các dòng trong cron job liên quan đến <code class="language-plaintext highlighter-rouge">bx_httpd-scale</code> để vô hiệu hóa chúng.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Vô hiệu hóa các dịch vụ không cần thiết giúp giảm thiểu bề mặt tấn công, giải phóng tài nguyên hệ thống và đơn giản hóa việc quản lý.</p>
+
+<h3 id="14-cấu-hình-logrotate">14. Cấu hình Logrotate</h3>
+
+<p>Script thiết lập <code class="language-plaintext highlighter-rouge">logrotate</code> cho các file log của Bitrix.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/bitrixlog <span class="nt">-N</span> <span class="nt">-P</span> /etc/logrotate.d/
+</code></pre></div></div>
+
+<p><strong>Giải thích chi tiết về <code class="language-plaintext highlighter-rouge">bitrixlog</code>:</strong>
+File này định nghĩa cách <code class="language-plaintext highlighter-rouge">logrotate</code> sẽ xử lý các file log của Bitrix.</p>
+
+<p><strong>Đoạn mã quan trọng (từ <code class="language-plaintext highlighter-rouge">bitrixlog</code>):</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/home/bitrix/www/*.log /home/bitrix/ext_www/*/*.log {
+        su bitrix bitrix
+        daily
+        dateext
+        dateformat -%Y-%m-%d
+        rotate 30
+        copytruncate
+        notifempty
+        missingok
+        compress
+        sharedscripts
+        }
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">su bitrix bitrix</code>: Chạy <code class="language-plaintext highlighter-rouge">logrotate</code> với quyền của người dùng <code class="language-plaintext highlighter-rouge">bitrix</code>.</li>
+  <li><code class="language-plaintext highlighter-rouge">daily</code>: Xoay log hàng ngày.</li>
+  <li><code class="language-plaintext highlighter-rouge">dateext</code>: Thêm ngày vào tên file log đã xoay.</li>
+  <li><code class="language-plaintext highlighter-rouge">rotate 30</code>: Giữ lại 30 file log đã xoay.</li>
+  <li><code class="language-plaintext highlighter-rouge">copytruncate</code>: Sao chép file log gốc và sau đó cắt ngắn nó, giúp các ứng dụng vẫn có thể ghi vào file gốc mà không cần khởi động lại.</li>
+  <li><code class="language-plaintext highlighter-rouge">compress</code>: Nén các file log đã xoay.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Log file có thể phát triển rất lớn, chiếm dụng dung lượng đĩa. <code class="language-plaintext highlighter-rouge">logrotate</code> giúp quản lý kích thước log, tiết kiệm không gian và dễ dàng hơn trong việc phân tích log.</p>
+
+<h3 id="15-vô-hiệu-hóa-httpd-access-logs">15. Vô hiệu hóa HTTPD Access Logs</h3>
+
+<p>Script vô hiệu hóa ghi log truy cập cho HTTPD (Apache).</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find /etc/httpd/ <span class="nt">-type</span> f <span class="nt">-print0</span> | xargs <span class="nt">-0</span> <span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/CustomLog/#CustomLog/g'</span>
+find /etc/httpd/ <span class="nt">-type</span> f <span class="nt">-print0</span> | xargs <span class="nt">-0</span> <span class="nb">sed</span> <span class="nt">-i</span> <span class="s1">'s/LogFormat "%h/LogFormat "%a/g'</span>
+systemctl reload httpd
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">sed -i 's/CustomLog/#CustomLog/g'</code>: Comment out các dòng <code class="language-plaintext highlighter-rouge">CustomLog</code> trong cấu hình Apache, ngăn Apache ghi log truy cập.</li>
+  <li><code class="language-plaintext highlighter-rouge">sed -i 's/LogFormat "%h/LogFormat "%a/g'</code>: Thay đổi định dạng log để sử dụng địa chỉ IP thực (<code class="language-plaintext highlighter-rouge">%a</code>) thay vì hostname (<code class="language-plaintext highlighter-rouge">%h</code>), hữu ích khi có reverse proxy như Nginx.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Nếu Nginx đang hoạt động như một reverse proxy và ghi log truy cập, việc vô hiệu hóa log của Apache có thể tránh trùng lặp và tiết kiệm tài nguyên.</p>
+
+<h3 id="16-cập-nhật-bảo-mật-tự-động-với-yum_cron_securesh">16. Cập nhật Bảo mật Tự động với <code class="language-plaintext highlighter-rouge">yum_cron_secure.sh</code></h3>
+
+<p>Script này cài đặt và cấu hình <code class="language-plaintext highlighter-rouge">yum-cron</code> để tự động cài đặt các bản cập nhật bảo mật.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bash &lt;<span class="o">(</span>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/yum_cron_secure.sh<span class="o">)</span>
+</code></pre></div></div>
+
+<p><strong>Giải thích chi tiết về <code class="language-plaintext highlighter-rouge">yum_cron_secure.sh</code>:</strong>
+Script này cài đặt gói <code class="language-plaintext highlighter-rouge">yum-cron</code> và sau đó ghi đè file cấu hình <code class="language-plaintext highlighter-rouge">/etc/yum/yum-cron.conf</code> với các cài đặt được tối ưu hóa.</p>
+
+<p><strong>Đoạn mã quan trọng (từ <code class="language-plaintext highlighter-rouge">yum_cron_secure.sh</code>):</strong></p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Trong /etc/yum/yum-cron.conf</span>
+update_cmd <span class="o">=</span> security
+download_updates <span class="o">=</span> <span class="nb">yes
+</span>apply_updates <span class="o">=</span> <span class="nb">yes
+</span>random_sleep <span class="o">=</span> 360
+emit_via <span class="o">=</span> stdio
+</code></pre></div></div>
+
+<p><strong>Giải thích:</strong></p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">update_cmd = security</code>: Chỉ áp dụng các bản cập nhật bảo mật.</li>
+  <li><code class="language-plaintext highlighter-rouge">download_updates = yes</code>: Tự động tải xuống các bản cập nhật.</li>
+  <li><code class="language-plaintext highlighter-rouge">apply_updates = yes</code>: Tự động cài đặt các bản cập nhật.</li>
+  <li><code class="language-plaintext highlighter-rouge">random_sleep = 360</code>: Chờ một khoảng thời gian ngẫu nhiên (tối đa 360 phút) trước khi chạy, giúp phân tán tải trên các máy chủ cập nhật.</li>
+  <li><code class="language-plaintext highlighter-rouge">emit_via = stdio</code>: Gửi thông báo qua stdout, cho phép cron gửi email thông báo nếu được cấu hình.</li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Bảo mật là ưu tiên hàng đầu. Tự động cập nhật các bản vá bảo mật giúp bảo vệ máy chủ của bạn khỏi các lỗ hổng đã biết mà không cần can thiệp thủ công thường xuyên.</p>
+
+<h3 id="17-các-cài-đặt-tùy-chọn">17. Các Cài đặt Tùy chọn</h3>
+
+<p>Cuối cùng, script sẽ hỏi bạn có muốn cài đặt và cấu hình các dịch vụ bổ sung hay không:</p>
+
+<ul>
+  <li><strong>Postfix (cho email)</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Do you wish to install postfix?"</span>
+<span class="k">select </span>yn <span class="k">in</span> <span class="s2">"Yes"</span> <span class="s2">"No"</span><span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$yn</span> <span class="k">in
+        </span>Yes <span class="p">)</span> bash &lt;<span class="o">(</span>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/initial_server_setup/postfix.sh<span class="o">)</span> <span class="p">;</span> <span class="nb">break</span><span class="p">;;</span> 
+        No <span class="p">)</span> <span class="nb">exit</span><span class="p">;;</span> 
+    <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+    <p><strong>Giải thích:</strong> Nếu bạn chọn “Yes”, script <code class="language-plaintext highlighter-rouge">postfix.sh</code> sẽ được chạy. Script này cấu hình Postfix làm Mail Transfer Agent (MTA) để gửi email từ máy chủ. Nó cũng cung cấp tùy chọn thiết lập relay SMTP với xác thực, rất quan trọng cho các ứng dụng cần gửi email thông báo hoặc giao dịch.
+<strong>Cấu hình:</strong> Script <code class="language-plaintext highlighter-rouge">postfix.sh</code> sẽ hỏi bạn các thông tin như relay SMTP server, cổng, login, password và domain.</p>
+  </li>
+  <li><strong>Zabbix (giám sát)</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Do you wish to install zabbix?"</span>
+<span class="k">select </span>yn <span class="k">in</span> <span class="s2">"Yes"</span> <span class="s2">"No"</span><span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$yn</span> <span class="k">in
+        </span>Yes <span class="p">)</span>
+                <span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please enter a ip of zabbix server : "</span> server_ip
+                <span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please enter a zabbix server domain : "</span> domain
+                <span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please enter a hostname for this zabbix node : "</span> <span class="nb">hostname
+
+                </span>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/bitrix/zabbix.sh | bash <span class="nt">-s</span> <span class="nt">--</span> <span class="k">${</span><span class="nv">server_ip</span><span class="k">}</span> <span class="k">${</span><span class="nv">domain</span><span class="k">}</span> <span class="k">${</span><span class="nv">hostname</span><span class="k">}</span>  <span class="p">;</span> <span class="nb">break</span><span class="p">;;</span>
+
+        No <span class="p">)</span> <span class="nb">exit</span><span class="p">;;</span> 
+    <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+    <p><strong>Giải thích:</strong> Nếu bạn chọn “Yes”, script <code class="language-plaintext highlighter-rouge">bitrix/zabbix.sh</code> sẽ được chạy để cài đặt và cấu hình Zabbix Agent, cho phép máy chủ này được giám sát bởi một Zabbix Server.
+<strong>Cấu hình:</strong> Bạn cần cung cấp IP của Zabbix Server, domain của Zabbix Server và hostname cho node này.</p>
+  </li>
+  <li><strong>Antivirus</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Do you wish to install antivirus?"</span>
+<span class="k">select </span>yn <span class="k">in</span> <span class="s2">"Yes"</span> <span class="s2">"No"</span><span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$yn</span> <span class="k">in
+        </span>Yes <span class="p">)</span>
+                <span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please enter your email : "</span> your_mail
+
+                curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/av/av_setup.sh | bash <span class="nt">-s</span> <span class="nt">--</span> <span class="k">${</span><span class="nv">your_mail</span><span class="k">}</span>  <span class="p">;</span> <span class="nb">break</span><span class="p">;;</span>
+
+        No <span class="p">)</span> <span class="nb">exit</span><span class="p">;;</span> 
+    <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+    <p><strong>Giải thích:</strong> Nếu bạn chọn “Yes”, script <code class="language-plaintext highlighter-rouge">av/av_setup.sh</code> sẽ được chạy để cài đặt và cấu hình giải pháp antivirus.
+<strong>Cấu hình:</strong> Bạn cần cung cấp địa chỉ email của mình để nhận thông báo.</p>
+  </li>
+  <li><strong>Backup Script</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Do you wish to install backup_script?"</span>
+<span class="k">select </span>yn <span class="k">in</span> <span class="s2">"Yes"</span> <span class="s2">"No"</span><span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$yn</span> <span class="k">in
+        </span>Yes <span class="p">)</span>
+                <span class="nb">read</span> <span class="nt">-p</span> <span class="s2">"Please enter your sitename : "</span> sitename
+
+                curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/bitrix/auto_setup.sh | bash <span class="nt">-s</span> <span class="nt">--</span> /home/bitrix/www <span class="p">;</span> <span class="nb">break</span><span class="p">;;</span>
+
+        No <span class="p">)</span> <span class="nb">exit</span><span class="p">;;</span> 
+    <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+    <p><strong>Giải thích:</strong> Nếu bạn chọn “Yes”, script <code class="language-plaintext highlighter-rouge">bitrix/auto_setup.sh</code> sẽ được chạy để thiết lập các script sao lưu tự động.
+<strong>Cấu hình:</strong> Bạn cần cung cấp tên trang web của mình.</p>
+  </li>
+  <li><strong>GitLab Runner</strong>:
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Do you wish to install gitlab-runner?"</span>
+<span class="k">select </span>yn <span class="k">in</span> <span class="s2">"Yes"</span> <span class="s2">"No"</span><span class="p">;</span> <span class="k">do
+    case</span> <span class="nv">$yn</span> <span class="k">in
+        </span>Yes <span class="p">)</span> curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/git/runner.sh | bash <span class="p">;</span> <span class="nb">break</span><span class="p">;;</span> 
+        No <span class="p">)</span> <span class="nb">exit</span><span class="p">;;</span> 
+    <span class="k">esac</span>
+<span class="k">done</span>
+</code></pre></div>    </div>
+    <p><strong>Giải thích:</strong> Nếu bạn chọn “Yes”, script <code class="language-plaintext highlighter-rouge">git/runner.sh</code> sẽ được chạy để cài đặt GitLab Runner, cho phép máy chủ này thực hiện các tác vụ CI/CD từ GitLab.</p>
+  </li>
+</ul>
+
+<p><strong>Tại sao cần:</strong> Các tùy chọn này cho phép bạn mở rộng chức năng của máy chủ theo nhu cầu cụ thể của dự án, từ gửi email, giám sát, bảo mật đến tự động hóa CI/CD.</p>
+
+<h2 id="kết-luận">Kết luận</h2>
+
+<p>Bộ script <code class="language-plaintext highlighter-rouge">initial_server_setup</code> cung cấp một giải pháp toàn diện để tự động hóa quá trình cấu hình máy chủ Linux ban đầu. Bằng cách tận dụng các script này, bạn có thể:</p>
+
+<ul>
+  <li><strong>Tiết kiệm thời gian</strong>: Giảm đáng kể thời gian thiết lập thủ công.</li>
+  <li><strong>Đảm bảo tính nhất quán</strong>: Áp dụng cùng một cấu hình trên nhiều máy chủ.</li>
+  <li><strong>Tăng cường bảo mật</strong>: Tự động hóa các biện pháp bảo mật cơ bản.</li>
+  <li><strong>Cải thiện hiệu suất</strong>: Áp dụng các tinh chỉnh tối ưu cho hệ thống, Nginx, PHP và MySQL.</li>
+</ul>
+
+<p>Hãy nhớ rằng, việc hiểu rõ từng bước và tùy chỉnh script theo môi trường của bạn là chìa khóa để tận dụng tối đa bộ công cụ mạnh mẽ này. Chúc bạn thành công!</p>
+
+  </div><a class="u-url" href="/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/useful_scripts/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Useful Scripts Documentation</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Useful Scripts Documentation</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://github.com/ojisanchamchi"><svg class="svg-icon"><use xlink:href="/useful_scripts/assets/minima-social-icons.svg#github"></use></svg> <span class="username">ojisanchamchi</span></a></li></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>A blog for documenting how and when to use the scripts in this repository.</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
