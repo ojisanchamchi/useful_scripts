@@ -13,9 +13,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: gh-pages
+    env:
+      BUNDLE_GEMFILE: gh-pages/Gemfile
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -30,9 +29,11 @@ jobs:
 
       - name: Install dependencies
         run: bundle install
+        working-directory: gh-pages
 
       - name: Build site with Jekyll
         run: bundle exec jekyll build
+        working-directory: gh-pages
 
       - name: Deploy to gh-pages branch
         uses: peaceiris/actions-gh-pages@v3
