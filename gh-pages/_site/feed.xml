@@ -1,4 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/useful_scripts/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/useful_scripts/" rel="alternate" type="text/html" /><updated>2025-10-15T14:30:41+07:00</updated><id>http://localhost:4000/useful_scripts/feed.xml</id><title type="html">Useful Scripts Documentation</title><subtitle>A blog for documenting how and when to use the scripts in this repository.</subtitle><entry><title type="html">Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer</title><link href="http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html" rel="alternate" type="text/html" title="Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer" /><published>2025-10-15T18:30:00+07:00</published><updated>2025-10-15T18:30:00+07:00</updated><id>http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed</id><content type="html" xml:base="http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html"><![CDATA[<p>Chào các bạn DevOps và Full-stack Developer!</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="https://yourusername.github.io/useful_scripts/feed.xml" rel="self" type="application/atom+xml" /><link href="https://yourusername.github.io/useful_scripts/" rel="alternate" type="text/html" /><updated>2025-10-15T15:37:44+07:00</updated><id>https://yourusername.github.io/useful_scripts/feed.xml</id><title type="html">Useful Scripts Documentation</title><subtitle>A blog for documenting how and when to use the scripts in this repository.</subtitle><entry><title type="html">Triển khai ImunifyAV tự động cho Bitrix</title><link href="https://yourusername.github.io/useful_scripts/2025/10/16/imunifyav-trien-khai-bitrix.html" rel="alternate" type="text/html" title="Triển khai ImunifyAV tự động cho Bitrix" /><published>2025-10-16T00:00:00+07:00</published><updated>2025-10-16T00:00:00+07:00</updated><id>https://yourusername.github.io/useful_scripts/2025/10/16/imunifyav-trien-khai-bitrix</id><content type="html" xml:base="https://yourusername.github.io/useful_scripts/2025/10/16/imunifyav-trien-khai-bitrix.html"><![CDATA[<blockquote>
+  <p>Bài viết này tổng hợp lại toàn bộ script trong thư mục <code class="language-plaintext highlighter-rouge">imunifyav/</code> và hướng dẫn bạn tái sử dụng chúng để triển khai ImunifyAV nhanh chóng cho hạ tầng Bitrix.</p>
+</blockquote>
+
+<h2 id="tổng-quan-giải-pháp">Tổng quan giải pháp</h2>
+<ul>
+  <li>Bộ script giúp tự động hoá quá trình cài đặt ImunifyAV, cấu hình tích hợp với giao diện Bitrix và thiết lập cảnh báo khi phát hiện mã độc.</li>
+  <li>Hai script cài đặt chính hỗ trợ song song cho môi trường CentOS/CloudLinux (<code class="language-plaintext highlighter-rouge">iav_setup.sh</code>) và Debian (<code class="language-plaintext highlighter-rouge">iav_setup_debian.sh</code>), trong khi các script còn lại đóng vai trò hỗ trợ (cung cấp dữ liệu người dùng/domain, hook thông báo, proxy repo…).</li>
+  <li>Tất cả đều giả định hệ thống chạy với user <code class="language-plaintext highlighter-rouge">bitrix</code>, thư mục web chính <code class="language-plaintext highlighter-rouge">/home/bitrix/www</code> (hoặc <code class="language-plaintext highlighter-rouge">/var/www/bitrix/default</code> trên Debian) và yêu cầu sẵn quyền <code class="language-plaintext highlighter-rouge">root</code>.</li>
+</ul>
+
+<h2 id="chuẩn-bị-trước-khi-chạy">Chuẩn bị trước khi chạy</h2>
+<ul>
+  <li>SMTP nội bộ hoạt động để script có thể gửi email qua <code class="language-plaintext highlighter-rouge">mailx</code>.</li>
+  <li>Cài sẵn <code class="language-plaintext highlighter-rouge">curl</code>, <code class="language-plaintext highlighter-rouge">wget</code> và đảm bảo truy cập được tới internet. Nếu bị chặn HTTPS tới CloudLinux, cấu hình thêm reverse proxy theo mẫu <code class="language-plaintext highlighter-rouge">nginx_proxy.conf</code>.</li>
+  <li>Xác định email nhận cảnh báo, ví dụ <code class="language-plaintext highlighter-rouge">security@example.com</code>.</li>
+  <li>Với Debian, cần các package: <code class="language-plaintext highlighter-rouge">s-nail</code>, <code class="language-plaintext highlighter-rouge">jq</code>.</li>
+</ul>
+
+<h2 id="các-script-thành-phần">Các script thành phần</h2>
+<ul>
+  <li><strong>get-users.sh</strong>: trả về danh sách user tích hợp cho ImunifyAV thông qua <code class="language-plaintext highlighter-rouge">jq</code>. Mặc định tạo user <code class="language-plaintext highlighter-rouge">bitrix</code> với UID 600.</li>
+  <li><strong>get-domains.sh</strong>: cung cấp thông tin domain chính và domain phụ của Bitrix, giúp giao diện Imunify hiển thị đúng cấu trúc thư mục.</li>
+  <li><strong>iav_hook.sh</strong>: hook đa năng đọc payload JSON, gửi mail hoặc lưu file nhật ký. Bạn chỉ việc chỉnh <code class="language-plaintext highlighter-rouge">MAIL_TO</code> và thư mục lưu.</li>
+  <li><strong>iav_notify.sh</strong>: phương án gửi thông báo siêu gọn (một dòng email). Có thể dùng độc lập nếu không cần logic phức tạp.</li>
+  <li><strong>iav_setup.sh / iav_setup_debian.sh</strong>: trái tim của quá trình cài đặt. Chúng tải toàn bộ script hỗ trợ, tạo symlink giao diện, cấu hình ignore list, thiết lập lịch quét, cập nhật tham số hiệu năng, và đăng ký hook thông báo.</li>
+  <li><strong>nginx_proxy.conf</strong>: template cấu hình Nginx reverse proxy tới các endpoint của CloudLinux phòng trường hợp mạng nội bộ chặn HTTPS trực tiếp.</li>
+</ul>
+
+<h2 id="cài-đặt-trên-centoscloudlinux">Cài đặt trên CentOS/CloudLinux</h2>
+<p>Chạy script với tham số email nhận cảnh báo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/imunifyav/iav_setup.sh <span class="se">\</span>
+  | bash <span class="nt">-s</span> <span class="nt">--</span> security@example.com
+</code></pre></div></div>
+
+<p>Script sẽ thực hiện:</p>
+<ul>
+  <li>Cài <code class="language-plaintext highlighter-rouge">mailx</code>, <code class="language-plaintext highlighter-rouge">jq</code>, <code class="language-plaintext highlighter-rouge">oniguruma</code>.</li>
+  <li>Tạo <code class="language-plaintext highlighter-rouge">/etc/sysconfig/imunify360/integration.conf</code> và map các script <code class="language-plaintext highlighter-rouge">get-users.sh</code>, <code class="language-plaintext highlighter-rouge">get-domains.sh</code>.</li>
+  <li>Đồng bộ thư mục giao diện <code class="language-plaintext highlighter-rouge">/opt/iav/.imunifyav</code> vào <code class="language-plaintext highlighter-rouge">/home/bitrix/www/</code>.</li>
+  <li>Tải về hook/utility script, set quyền thực thi và chèn email vào <code class="language-plaintext highlighter-rouge">iav_hook.sh</code>.</li>
+  <li>Cài ImunifyAV thông qua <code class="language-plaintext highlighter-rouge">imav-deploy.sh</code> (mặc định lấy từ mirror <code class="language-plaintext highlighter-rouge">imun.0fr.ru</code>).</li>
+  <li>Đăng ký hook cho sự kiện <code class="language-plaintext highlighter-rouge">USER_SCAN_MALWARE_FOUND</code> và <code class="language-plaintext highlighter-rouge">CUSTOM_SCAN_MALWARE_FOUND</code>.</li>
+  <li>Thêm danh sách thư mục bỏ qua (cache, backup, upload của Bitrix).</li>
+  <li>Tuỳ chỉnh cấu hình scan (Hyperscan, giới hạn CPU/IO/RAM) và tạo cron quét hằng ngày lúc 01:10.</li>
+  <li>Điều chỉnh <code class="language-plaintext highlighter-rouge">login.defs</code> để UID/GID 600 trở thành user thường, phù hợp với user <code class="language-plaintext highlighter-rouge">bitrix</code>.</li>
+</ul>
+
+<h2 id="cài-đặt-trên-debian">Cài đặt trên Debian</h2>
+<p>Thao tác tương tự nhưng dùng script dành riêng:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl <span class="nt">-sL</span> https://raw.githubusercontent.com/YogSottot/useful_scripts/master/imunifyav/iav_setup_debian.sh <span class="se">\</span>
+  | bash <span class="nt">-s</span> <span class="nt">--</span> security@example.com
+</code></pre></div></div>
+
+<p>Điểm khác biệt:</p>
+<ul>
+  <li>Dùng <code class="language-plaintext highlighter-rouge">apt</code> và <code class="language-plaintext highlighter-rouge">s-nail</code>.</li>
+  <li>Symlink giao diện về <code class="language-plaintext highlighter-rouge">/var/www/bitrix/default</code>.</li>
+  <li>Mirror repo sử dụng domain <code class="language-plaintext highlighter-rouge">repoimun.0fr.ru</code> và <code class="language-plaintext highlighter-rouge">filesimun.0fr.ru</code>, <code class="language-plaintext highlighter-rouge">apiimun.0fr.ru</code>.</li>
+  <li>Chỉnh sửa đường dẫn bỏ qua, cron và ignore list tương ứng môi trường Debian.</li>
+  <li>Trigger khởi động lại hàng loạt service Imunify để áp dụng cấu hình mới.</li>
+</ul>
+
+<h2 id="tuỳ-chỉnh-cảnh-báo-và-lưu-trữ">Tuỳ chỉnh cảnh báo và lưu trữ</h2>
+<ul>
+  <li>Để nhận mail giàu thông tin, bật <code class="language-plaintext highlighter-rouge">MAIL_ENABLE=yes</code> trong <code class="language-plaintext highlighter-rouge">iav_hook.sh</code> và cấu hình <code class="language-plaintext highlighter-rouge">MAIL_TO</code>.</li>
+  <li>Nếu cần lưu log, giữ <code class="language-plaintext highlighter-rouge">FILE_ENABLE=yes</code>; script sẽ tạo thư mục <code class="language-plaintext highlighter-rouge">/tmp/imunify-script-files</code> và log theo tên sự kiện.</li>
+  <li>Có thể thêm custom handler bên dưới mỗi <code class="language-plaintext highlighter-rouge"># append your stuff here</code> để gọi webhook, Slack, Telegram…</li>
+</ul>
+
+<h2 id="quản-lý-danh-sách-bỏ-qua">Quản lý danh sách bỏ qua</h2>
+<ul>
+  <li>Các script thêm sẵn ignore list cho cache/backup của Bitrix để tránh false positive.</li>
+  <li>Nếu bạn lưu mã nguồn ở thư mục khác, bổ sung vào <code class="language-plaintext highlighter-rouge">/etc/sysconfig/imunify360/malware-filters-admin-conf/ignored.txt</code>.</li>
+  <li>Khi cần quét đầy đủ, có thể tạm thời xoá các dòng ignore và chạy:</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imunify-antivirus update sigs
+imunify-antivirus malware on-demand start <span class="nt">--path</span><span class="o">=</span><span class="s1">'/home/bitrix/'</span> <span class="nt">--file-mask</span><span class="o">=</span><span class="s2">"*.php,*.js,*.html,.htaccess"</span>
+</code></pre></div></div>
+
+<h2 id="lịch-quét-và-tài-nguyên">Lịch quét và tài nguyên</h2>
+<ul>
+  <li>Cron mặc định chạy lúc 01:10 mỗi ngày: cập nhật chữ ký trước khi quét.</li>
+  <li>Tham số <code class="language-plaintext highlighter-rouge">--intensity-cpu</code> và <code class="language-plaintext highlighter-rouge">--intensity-io</code> được đặt ở mức 3, phù hợp server vừa phải. Điều chỉnh tại <code class="language-plaintext highlighter-rouge">/etc/cron.d/iav_scan_schedule</code>.</li>
+  <li>Các lệnh <code class="language-plaintext highlighter-rouge">imunify-antivirus config update</code> trong script đã giới hạn CPU/IO/RAM khi quét để không ảnh hưởng website.</li>
+</ul>
+
+<h2 id="kiểm-tra-sau-cài-đặt">Kiểm tra sau cài đặt</h2>
+<ol>
+  <li>Đăng nhập giao diện ImunifyAV và xác minh danh sách domain hiển thị đúng.</li>
+  <li>Thực hiện quét thử rồi kiểm tra email/đường dẫn log nhận được từ <code class="language-plaintext highlighter-rouge">iav_hook.sh</code>.</li>
+  <li>Đảm bảo cron đã tạo: <code class="language-plaintext highlighter-rouge">crontab -l -u root | grep iav_scan_schedule</code>.</li>
+  <li>Theo dõi <code class="language-plaintext highlighter-rouge">/opt/iav/</code> xem các script có cập nhật và quyền sở hữu <code class="language-plaintext highlighter-rouge">root:_imunify</code>.</li>
+</ol>
+
+<h2 id="gợi-ý-bảo-trì">Gợi ý bảo trì</h2>
+<ul>
+  <li>Khi CloudLinux thay đổi endpoint, cập nhật các mirror trong <code class="language-plaintext highlighter-rouge">nginx_proxy.conf</code> và phần <code class="language-plaintext highlighter-rouge">sed</code> của script.</li>
+  <li>Giữ <code class="language-plaintext highlighter-rouge">jq</code>, <code class="language-plaintext highlighter-rouge">imunify-antivirus</code> ở phiên bản mới. Có thể tự động hoá bằng cron <code class="language-plaintext highlighter-rouge">yum update imunify-antivirus</code> hoặc <code class="language-plaintext highlighter-rouge">apt upgrade</code>.</li>
+  <li>Định kỳ rà soát ignore list để tránh bỏ sót file độc hại mới.</li>
+</ul>
+
+<p>Với bộ script này, bạn có thể chuẩn hoá việc triển khai ImunifyAV cho nhiều máy chủ Bitrix, giảm thao tác thủ công và đảm bảo mỗi đợt quét đều gửi cảnh báo kịp thời.</p>]]></content><author><name></name></author><category term="imunifyav" /><category term="security" /><category term="bitrix" /><summary type="html"><![CDATA[Bài viết này tổng hợp lại toàn bộ script trong thư mục imunifyav/ và hướng dẫn bạn tái sử dụng chúng để triển khai ImunifyAV nhanh chóng cho hạ tầng Bitrix.]]></summary></entry><entry><title type="html">Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer</title><link href="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html" rel="alternate" type="text/html" title="Thiết lập Máy chủ Linux Ban đầu: Hướng dẫn Chi tiết cho DevOps và Full-stack Developer" /><published>2025-10-15T18:30:00+07:00</published><updated>2025-10-15T18:30:00+07:00</updated><id>https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed</id><content type="html" xml:base="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide-detailed.html"><![CDATA[<p>Chào các bạn DevOps và Full-stack Developer!</p>
 
 <p>Việc thiết lập một máy chủ Linux mới từ đầu có thể là một nhiệm vụ tốn thời gian và dễ mắc lỗi. Để đảm bảo máy chủ của bạn hoạt động hiệu quả, bảo mật và tuân thủ các tiêu chuẩn, việc tự động hóa là chìa khóa. Bộ script <code class="language-plaintext highlighter-rouge">initial_server_setup</code> này được thiết kế để giúp bạn thực hiện điều đó, biến quá trình cấu hình ban đầu thành một quy trình nhanh chóng và đáng tin cậy.</p>
 
@@ -507,7 +612,7 @@ emit_via <span class="o">=</span> stdio
   <li><strong>Cải thiện hiệu suất</strong>: Áp dụng các tinh chỉnh tối ưu cho hệ thống, Nginx, PHP và MySQL.</li>
 </ul>
 
-<p>Hãy nhớ rằng, việc hiểu rõ từng bước và tùy chỉnh script theo môi trường của bạn là chìa khóa để tận dụng tối đa bộ công cụ mạnh mẽ này. Chúc bạn thành công!</p>]]></content><author><name></name></author><category term="initial-setup" /><summary type="html"><![CDATA[Chào các bạn DevOps và Full-stack Developer!]]></summary></entry><entry><title type="html">Thiết lập máy chủ ban đầu hiệu quả với các Script tự động</title><link href="http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide.html" rel="alternate" type="text/html" title="Thiết lập máy chủ ban đầu hiệu quả với các Script tự động" /><published>2025-10-15T18:00:00+07:00</published><updated>2025-10-15T18:00:00+07:00</updated><id>http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide</id><content type="html" xml:base="http://localhost:4000/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide.html"><![CDATA[<p>Chào các bạn DevOps và Full-stack Developer!</p>
+<p>Hãy nhớ rằng, việc hiểu rõ từng bước và tùy chỉnh script theo môi trường của bạn là chìa khóa để tận dụng tối đa bộ công cụ mạnh mẽ này. Chúc bạn thành công!</p>]]></content><author><name></name></author><category term="initial-setup" /><summary type="html"><![CDATA[Chào các bạn DevOps và Full-stack Developer!]]></summary></entry><entry><title type="html">Thiết lập máy chủ ban đầu hiệu quả với các Script tự động</title><link href="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide.html" rel="alternate" type="text/html" title="Thiết lập máy chủ ban đầu hiệu quả với các Script tự động" /><published>2025-10-15T18:00:00+07:00</published><updated>2025-10-15T18:00:00+07:00</updated><id>https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide</id><content type="html" xml:base="https://yourusername.github.io/useful_scripts/initial-setup/2025/10/15/initial-server-setup-guide.html"><![CDATA[<p>Chào các bạn DevOps và Full-stack Developer!</p>
 
 <p>Việc thiết lập một máy chủ mới thường tốn rất nhiều thời gian và công sức, đặc biệt là khi bạn cần đảm bảo hiệu suất, bảo mật và các cấu hình tối ưu. Trong bài viết này, chúng ta sẽ khám phá bộ sưu tập các script tự động trong thư mục <code class="language-plaintext highlighter-rouge">initial_server_setup/</code> giúp bạn đơn giản hóa quá trình này.</p>
 
@@ -562,7 +667,7 @@ emit_via <span class="o">=</span> stdio
   <li><strong>Kiểm tra</strong>: Luôn kiểm tra các thay đổi trong môi trường staging trước khi triển khai lên production.</li>
 </ul>
 
-<p>Hy vọng bài viết này giúp bạn có cái nhìn tổng quan và biết cách tận dụng bộ script <code class="language-plaintext highlighter-rouge">initial_server_setup/</code> để quản lý máy chủ hiệu quả hơn!</p>]]></content><author><name></name></author><category term="initial-setup" /><summary type="html"><![CDATA[Chào các bạn DevOps và Full-stack Developer!]]></summary></entry><entry><title type="html">How to use av/botblock.sh</title><link href="http://localhost:4000/useful_scripts/av/2025/10/15/how-to-use-av-botblock.html" rel="alternate" type="text/html" title="How to use av/botblock.sh" /><published>2025-10-15T17:00:00+07:00</published><updated>2025-10-15T17:00:00+07:00</updated><id>http://localhost:4000/useful_scripts/av/2025/10/15/how-to-use-av-botblock</id><content type="html" xml:base="http://localhost:4000/useful_scripts/av/2025/10/15/how-to-use-av-botblock.html"><![CDATA[<p>This script (<code class="language-plaintext highlighter-rouge">av/botblock.sh</code>) is designed to block malicious bots from accessing your server. It leverages various techniques to identify and block unwanted traffic.</p>
+<p>Hy vọng bài viết này giúp bạn có cái nhìn tổng quan và biết cách tận dụng bộ script <code class="language-plaintext highlighter-rouge">initial_server_setup/</code> để quản lý máy chủ hiệu quả hơn!</p>]]></content><author><name></name></author><category term="initial-setup" /><summary type="html"><![CDATA[Chào các bạn DevOps và Full-stack Developer!]]></summary></entry><entry><title type="html">How to use av/botblock.sh</title><link href="https://yourusername.github.io/useful_scripts/av/2025/10/15/how-to-use-av-botblock.html" rel="alternate" type="text/html" title="How to use av/botblock.sh" /><published>2025-10-15T17:00:00+07:00</published><updated>2025-10-15T17:00:00+07:00</updated><id>https://yourusername.github.io/useful_scripts/av/2025/10/15/how-to-use-av-botblock</id><content type="html" xml:base="https://yourusername.github.io/useful_scripts/av/2025/10/15/how-to-use-av-botblock.html"><![CDATA[<p>This script (<code class="language-plaintext highlighter-rouge">av/botblock.sh</code>) is designed to block malicious bots from accessing your server. It leverages various techniques to identify and block unwanted traffic.</p>
 
 <h2 id="when-to-use-it">When to use it</h2>
 
